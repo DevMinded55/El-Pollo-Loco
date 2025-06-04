@@ -9,7 +9,7 @@ class Bottles extends MovableObject{
 
     constructor(){
         super();
-        this.loadImage("assets/img/8_coin/coin_1.png");
+        this.loadImage("assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png");
         this.speed = 0.15 + Math.random() * 0.5;
         this.x = 200 + Math.random() * 500;
         this.loadImages(this.IMAGES_WALKING);
