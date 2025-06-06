@@ -3,8 +3,7 @@ class World {
     ctx;
     canvas;
     keyboard;
-    level;
-    clouds = level.clouds;
+    level = new Level();
     camera_x = 0;
     statusBar = new Statusbar();
     coinBar = new Coinbar();
@@ -12,33 +11,27 @@ class World {
     bossBar = new Bossbar();
     throwableObjects = [];
 
-    constructor(canvas, keyboard, level) {
+    constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.level = level;
-        this.clouds = level.clouds;
 
         this.draw();
-
         this.setWorld();
-        this.bossBar = new Bossbar();
         this.run();
     }
 
     setWorld() {
         this.character.world = this;
-        this.endboss = this.level.enemies.find((e) => e instanceof Endboss);
     }
 
     run() {
-        setInterval(() => {
-            this.checkCollisions();
-            this.checkThrowObjects();
-            this.checkItemCollisions();
-        }, 200);
-        addGameInterval(this.myInterval);
-    }
+    addGameInterval(() => {
+        this.checkCollisions();
+        this.checkThrowObjects();
+        this.checkItemCollisions();
+    }, 200);
+}
 
     checkThrowObjects() {
         if (this.keyboard.D && !this.bottleBar.isEmpty()) {
@@ -52,13 +45,13 @@ class World {
     }
 
     checkCollisions() {
+        // Gegner-Kollisionen
         this.level.enemies.forEach((enemy) => {
             if (
                 this.character.isColliding(enemy) &&
                 this.character.speedY < 0 &&
                 !enemy.isDead
             ) {
-                // Gegner besiegt
                 enemy.isDead = true;
                 enemy.energy = 0;
                 enemy.loadImage(enemy.IMAGE_DEAD);
@@ -74,11 +67,11 @@ class World {
                     }
                 }, 1000);
 
-                this.character.jump(); // Rückstoß nach oben
+                this.character.jump();
             } else if (this.character.isColliding(enemy) && !enemy.isDead) {
-                // Schaden nehmen
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
+
                 if (this.character.energy <= 0 && !this.character.dead) {
                     this.character.dead = true;
                     this.character.die();
@@ -86,45 +79,29 @@ class World {
             }
         });
 
-        // Flaschen treffen den Endboss
+        // Flaschen-Kollisionen mit Boss
         this.throwableObjects.forEach((bottle) => {
-            if (
-                this.endboss &&
-                bottle.isColliding(this.endboss) &&
-                !bottle.broken &&
-                !this.endboss.dead
-            ) {
-                this.endboss.hit();
+            this.level.enemies.forEach((enemy) => {
                 if (
-                    this.endboss &&
-                    bottle.isColliding(this.endboss) &&
+                    enemy.isBoss &&
+                    bottle.isColliding(enemy) &&
                     !bottle.broken &&
-                    !this.endboss.dead
+                    !enemy.dead
                 ) {
-                    this.endboss.hit();
+                    enemy.hit();
                     bottle.broken = true;
-                    this.bossBar.setPercentage(this.endboss.energy);
+                    this.bossBar.setPercentage(enemy.energy);
+
+                    if (enemy.dead) {
+                        setTimeout(() => {
+                            showEndScreen(true);
+                        }, 1000);
+                    }
                 }
-                bottle.broken = true;
-            }
+            });
         });
 
-        //  Entferne zerbrochene Flaschen aus dem Array
-        this.throwableObjects = this.throwableObjects.filter((b) => !b.broken);
-    }
-
-    checkBottleBossCollision() {
-        this.throwableObjects.forEach((bottle) => {
-            if (
-                bottle.isColliding(this.endboss) &&
-                !bottle.broken &&
-                !this.endboss.dead
-            ) {
-                this.endboss.hit();
-                bottle.broken = true;
-            }
-        });
-
+        // Entferne zerbrochene Flaschen
         this.throwableObjects = this.throwableObjects.filter((b) => !b.broken);
     }
 
@@ -145,31 +122,26 @@ class World {
     }
 
     draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.translate(this.camera_x, 0);
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.translate(this.camera_x, 0);
 
-        // Alles, was sich mit der Kamera bewegen soll
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addToMap(this.character);
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.bottles);
-        this.addObjectsToMap(this.throwableObjects);
-        this.addObjectsToMap(this.level.clouds);
+    this.addObjectsToMap(this.level.backgroundObjects);
+    this.addToMap(this.character);
+    this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.level.coins);
+    this.addObjectsToMap(this.level.bottles);
+    this.addObjectsToMap(this.throwableObjects);
+    this.addObjectsToMap(this.level.clouds);
 
-        this.ctx.translate(-this.camera_x, 0);
+    this.ctx.translate(-this.camera_x, 0);
 
-        // Feste Elemente (bleiben am Bildschirmrand)
-        this.addToMap(this.statusBar);
-        this.addToMap(this.coinBar);
-        this.addToMap(this.bottleBar);
-        this.addToMap(this.bossBar);
+    this.addToMap(this.statusBar);
+    this.addToMap(this.coinBar);
+    this.addToMap(this.bottleBar);
+    this.addToMap(this.bossBar);
 
-        let self = this;
-        requestAnimationFrame(function () {
-            self.draw();
-        });
-    }
+    animationFrameId = requestAnimationFrame(() => this.draw());
+}
 
     addObjectsToMap(objects) {
         objects.forEach((o) => {
@@ -183,7 +155,6 @@ class World {
         }
         mo.draw(this.ctx);
         mo.drawFrame(this.ctx);
-
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }

@@ -1,7 +1,11 @@
 let gameIntervals = [];
 
-function addGameInterval(interval) {
-    gameIntervals.push(interval);
+function addGameInterval(func, time) {
+    const id = setInterval(func, time);
+    gameIntervals.push(id);
+    console.log(gameIntervals);
+    
+    return id;
 }
 
 function clearAllIntervals() {

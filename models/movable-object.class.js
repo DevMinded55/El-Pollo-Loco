@@ -7,7 +7,7 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
 
     applyGravity() {
-        setInterval(() => {
+        addGameInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
@@ -15,7 +15,6 @@ class MovableObject extends DrawableObject {
                 this.speedY = 0;
             }
         }, 1000 / 25);
-        addGameInterval(this.myInterval);
     }
 
     isAboveGround() {

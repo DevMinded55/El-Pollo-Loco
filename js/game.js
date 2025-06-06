@@ -1,12 +1,13 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let animationFrameId;
+
 
 
 function init() {
     canvas = document.getElementById("canvas");
-    level = new Level();
-    world = new World(canvas, keyboard, level);
+    world = new World(canvas, keyboard);
 }
 
 function startGame() {
@@ -42,6 +43,9 @@ function restartGame() {
     // Canvas wieder zeigen
     const canvas = document.getElementById("canvas");
     canvas.style.display = "block";
+
+    //Alle Animationen werden gestoppt
+    cancelAnimationFrame(animationFrameId);
 
     // Alle Intervalle löschen
     clearAllIntervals();

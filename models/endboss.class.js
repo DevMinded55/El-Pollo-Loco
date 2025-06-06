@@ -5,6 +5,7 @@ class Endboss extends MovableObject {
     energy = 100;
     dead = false;
     hurt = false;
+    isBoss = true;
 
     IMAGES_WALKING = [
         "assets/img/4_enemie_boss_chicken/2_alert/G5.png",
@@ -41,7 +42,7 @@ class Endboss extends MovableObject {
     }
 
     animate() {
-        let endbossInterval = setInterval(() => {
+        addGameInterval(() => {
             if (this.dead) {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.hurt) {
@@ -50,7 +51,6 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 1000 / 5);
-        addGameInterval(endbossInterval);
     }
 
     hit() {

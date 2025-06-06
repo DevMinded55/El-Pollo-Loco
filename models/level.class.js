@@ -1,14 +1,5 @@
 class Level {
-    enemies;
-    clouds;
-    backgroundObjects;
-    level_end_x = 2200;
-    coins;
-    bottles;
-    endboss;
-
-    constructor() {
-        this.enemies = [
+    enemies = [
             new Chicken(),
             new Chicken(),
             new Chicken(),
@@ -17,10 +8,10 @@ class Level {
             new SmallChicken(),
             new Endboss()
         ];
-        this.clouds = [
+    clouds  = [
             new Cloud()
         ];
-        this.backgroundObjects = [
+    backgroundObjects  = [
             new BackgroundObject("assets/img/5_background/layers/air.png",-719),
             new BackgroundObject("assets/img/5_background/layers/3_third_layer/2.png", -719),
             new BackgroundObject("assets/img/5_background/layers/2_second_layer/2.png",-719),
@@ -42,19 +33,19 @@ class Level {
             new BackgroundObject("assets/img/5_background/layers/2_second_layer/2.png",2157),
             new BackgroundObject("assets/img/5_background/layers/1_first_layer/2.png",2157)
         ];
-        this.coins = [
+    level_end_x = 2200;
+    coins  = [
             new Coins(),
             new Coins(),
             new Coins(),
             new Coins(),
             new Coins()
         ];
-        this.bottles = [
+    bottles = [
             new Bottles(),
             new Bottles(),
             new Bottles(),
             new Bottles()
         ];
-        this.endboss = this.enemies.find(enemy => enemy instanceof Endboss);
-    }
+    endboss;
 }
