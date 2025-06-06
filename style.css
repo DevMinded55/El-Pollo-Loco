@@ -1,9 +1,65 @@
-body{
+body {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-canvas{
+canvas {
     background-color: black;
+}
+
+#start-screen {
+    position: absolute;
+    width: 720px;
+    height: 480px;
+    background: url("assets/img/9_intro_outro_screens/start/startscreen_1.png") no-repeat center
+        center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+#start-screen h1 {
+    color: white;
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px black;
+}
+
+#start-screen button {
+    padding: 15px 30px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#end-screen {
+    position: absolute;
+    background: url("assets/img/5_background/first_half_background.png") no-repeat center
+        center;
+    background-size: cover;
+    width: 720px;
+    height: 480px;
+    background-color: rgba(0,0,0,0.8);
+    text-align: center;
+    padding-top: 100px;
+    color: white;
+}
+
+#end-screen button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 20px;
+    position: absolute;
+    top: 80%;
+}
+
+#end-image{
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 20%;
 }

@@ -6,15 +6,6 @@ const level1 = new Level(
     new SmallChicken(),
     new SmallChicken(),
     new SmallChicken(),
-    new Coins(),
-    new Coins(),
-    new Coins(),
-    new Coins(),
-    new Coins(),
-    new Bottles(),
-    new Bottles(),
-    new Bottles(),
-    new Bottles(),
     new Endboss()
 ],
 [
@@ -41,5 +32,18 @@ const level1 = new Level(
         new BackgroundObject("assets/img/5_background/layers/3_third_layer/2.png", 2157),
         new BackgroundObject("assets/img/5_background/layers/2_second_layer/2.png",2157),
         new BackgroundObject("assets/img/5_background/layers/1_first_layer/2.png",2157)
+    ],
+    [
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins()
+    ],
+    [
+        new Bottles(),
+        new Bottles(),
+        new Bottles(),
+        new Bottles()
     ]
 );

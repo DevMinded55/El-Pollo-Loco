@@ -2,6 +2,8 @@ class Character extends MovableObject {
     height = 280;
     y = 155;
     speed = 10;
+    world;
+
     IMAGES_WALKING = [
         "assets/img/2_character_pepe/2_walk/W-21.png",
         "assets/img/2_character_pepe/2_walk/W-22.png",
@@ -20,7 +22,7 @@ class Character extends MovableObject {
         "assets/img/2_character_pepe/3_jump/J-37.png",
         "assets/img/2_character_pepe/3_jump/J-38.png",
         "assets/img/2_character_pepe/3_jump/J-39.png",
-    ]
+    ];
     IMAGES_DEAD = [
         "assets/img/2_character_pepe/5_dead/D-51.png",
         "assets/img/2_character_pepe/5_dead/D-52.png",
@@ -29,13 +31,12 @@ class Character extends MovableObject {
         "assets/img/2_character_pepe/5_dead/D-55.png",
         "assets/img/2_character_pepe/5_dead/D-56.png",
         "assets/img/2_character_pepe/5_dead/D-57.png"
-    ]
+    ];
     IMAGES_HURT = [
         "assets/img/2_character_pepe/4_hurt/H-41.png",
         "assets/img/2_character_pepe/4_hurt/H-42.png",
         "assets/img/2_character_pepe/4_hurt/H-43.png"
-    ]
-    world;
+    ];
 
     constructor() {
         super();
@@ -49,40 +50,45 @@ class Character extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+        let moveInterval = setInterval(() => {
+            if (this.world?.keyboard?.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
             }
 
-            if (this.world.keyboard.LEFT && this.x > 0) {
+            if (this.world?.keyboard?.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
             }
 
-            if(this.world.keyboard.UP || this.world.keyboard.SPACE && !this.isAboveGround()){
+            if ((this.world?.keyboard?.UP || this.world?.keyboard?.SPACE) && !this.isAboveGround()) {
                 this.jump();
             }
 
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
+        addGameInterval(moveInterval);
 
-        setInterval(() => {
+        let animationInterval = setInterval(() => {
             if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD)
-            }
-            else if(this.isHurt()){
-                this.playAnimation(this.IMAGES_HURT)
-            }else if(this.isAboveGround()){
-                this.playAnimation(this.IMAGES_JUMPING)
-            } else{
-
-            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                this.playAnimation(this.IMAGES_DEAD);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            } else if (this.isAboveGround()) {
+                this.playAnimation(this.IMAGES_JUMPING);
+            } else if (this.world?.keyboard?.RIGHT || this.world?.keyboard?.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
-            }
         }, 50);
+        addGameInterval(animationInterval);
     }
 
-    
+    die() {
+        this.energy = 0;
+        this.playAnimation(this.IMAGES_DEAD);
+
+        setTimeout(() => {
+            showEndScreen(false); // Spieler verliert
+        }, 1000);
+    }
 }

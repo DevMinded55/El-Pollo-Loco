@@ -18,5 +18,6 @@ class ThrowableObject extends MovableObject{
         setInterval(()=> {
             this.x += 10;
         }, 25);
+        addGameInterval(this.myInterval);
     }
 }
