@@ -94,7 +94,7 @@ class World {
                     enemy.hit();
                     bottle.broken = true;
                     this.bossBar.setPercentage(enemy.energy);
-                    playSound("BOTTLE_BREAK");
+                    playSound("CHICKEN_DEAD_2");
 
                     if (enemy.dead) {
                         setTimeout(() => {
