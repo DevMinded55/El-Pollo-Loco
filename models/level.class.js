@@ -1,13 +1,5 @@
 class Level {
-    enemies = [
-            new Chicken(),
-            new Chicken(),
-            new Chicken(),
-            new SmallChicken(),
-            new SmallChicken(),
-            new SmallChicken(),
-            new Endboss()
-        ];
+    enemies = Level.createEnemies();
     clouds  = [
             new Cloud()
         ];
@@ -34,18 +26,33 @@ class Level {
             new BackgroundObject("assets/img/5_background/layers/1_first_layer/2.png",2157)
         ];
     level_end_x = 2200;
-    coins  = [
-            new Coins(),
-            new Coins(),
-            new Coins(),
-            new Coins(),
-            new Coins()
-        ];
-    bottles = [
-            new Bottles(),
-            new Bottles(),
-            new Bottles(),
-            new Bottles()
-        ];
+    coins  = Level.spread(5, 400, 1900).map(x => new Coins(x));
+    bottles = Level.spread(4, 300, 1800).map(x => new Bottles(x));
     endboss;
+
+    static createEnemies() {
+        const positions = Level.spread(6, 400, 1900);
+        const enemies = [
+            new Chicken(positions[0]),
+            new Chicken(positions[1]),
+            new Chicken(positions[2]),
+            new SmallChicken(positions[3]),
+            new SmallChicken(positions[4]),
+            new SmallChicken(positions[5]),
+            new Endboss()
+        ];
+        return enemies;
+    }
+
+    static spread(count, min, max) {
+        const gap = (max - min) / (count - 1);
+        const jitter = gap * 0.3;
+        const positions = [];
+        for (let i = 0; i < count; i++) {
+            const base = min + i * gap;
+            const offset = (Math.random() - 0.5) * 2 * jitter;
+            positions.push(Math.round(base + offset));
+        }
+        return positions;
+    }
 }

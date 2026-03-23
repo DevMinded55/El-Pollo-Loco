@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    landedAt = 0;
 
     applyGravity() {
         addGameInterval(() => {
@@ -12,6 +13,9 @@ class MovableObject extends DrawableObject {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             } else {
+                if (this.speedY < 0) {
+                    this.landedAt = Date.now();
+                }
                 this.speedY = 0;
             }
         }, 1000 / 25);

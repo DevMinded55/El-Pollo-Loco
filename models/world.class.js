@@ -101,10 +101,10 @@ class World {
     isStompHit(enemy) {
         if (enemy.isBoss) return false;
 
-        const characterBottom = this.character.y + this.character.height;
-        const enemyBottom = enemy.y + enemy.height;
+        const isFalling = this.character.speedY < 0;
+        const justLanded = Date.now() - this.character.landedAt < 300;
 
-        return this.character.speedY < 0 && characterBottom < enemyBottom;
+        return isFalling || justLanded;
     }
 
     defeatEnemyByStomp(enemy) {

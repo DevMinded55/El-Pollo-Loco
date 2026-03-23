@@ -13,12 +13,12 @@ class SmallChicken extends MovableObject {
     ];
     IMAGE_DEAD = "assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png";
 
-    constructor() {
+    constructor(x) {
         super();
         this.loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
         this.speed = 0.15 + Math.random() * 0.5;
-        this.x = 200 + Math.random() * 500;
+        this.x = x ?? 200 + Math.random() * 500;
         this.animate();
     }
 
