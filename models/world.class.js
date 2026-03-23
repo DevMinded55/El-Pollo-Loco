@@ -47,35 +47,21 @@ class World {
     checkCollisions() {
         // Gegner-Kollisionen
         this.level.enemies.forEach((enemy) => {
-            if (
-                this.character.isColliding(enemy) &&
-                this.character.speedY < 0 &&
-                !enemy.isDead
-            ) {
-                enemy.isDead = true;
-                enemy.energy = 0;
-                enemy.loadImage(enemy.IMAGE_DEAD);
+            if (this.isEnemyDefeated(enemy)) return;
+            if (!this.character.isColliding(enemy)) return;
 
-                if (typeof enemy.stopAnimation === "function") {
-                    enemy.stopAnimation();
-                }
-
-                setTimeout(() => {
-                    const index = this.level.enemies.indexOf(enemy);
-                    if (index > -1) {
-                        this.level.enemies.splice(index, 1);
-                    }
-                }, 1000);
-
+            if (this.isStompHit(enemy)) {
+                this.defeatEnemyByStomp(enemy);
                 this.character.jump();
-            } else if (this.character.isColliding(enemy) && !enemy.isDead) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
+                return;
+            }
 
-                if (this.character.energy <= 0 && !this.character.dead) {
-                    this.character.dead = true;
-                    this.character.die();
-                }
+            this.character.hit();
+            this.statusBar.setPercentage(this.character.energy);
+
+            if (this.character.energy <= 0 && !this.character.dead) {
+                this.character.dead = true;
+                this.character.die();
             }
         });
 
@@ -103,6 +89,39 @@ class World {
 
         // Entferne zerbrochene Flaschen
         this.throwableObjects = this.throwableObjects.filter((b) => !b.broken);
+    }
+
+    isEnemyDefeated(enemy) {
+        if (typeof enemy.isDead === "function") {
+            return enemy.isDead();
+        }
+        return !!enemy.isDead || !!enemy.dead;
+    }
+
+    isStompHit(enemy) {
+        if (enemy.isBoss) return false;
+
+        const characterBottom = this.character.y + this.character.height;
+        const enemyBottom = enemy.y + enemy.height;
+
+        return this.character.speedY < 0 && characterBottom < enemyBottom;
+    }
+
+    defeatEnemyByStomp(enemy) {
+        enemy.isDead = true;
+        enemy.energy = 0;
+        enemy.loadImage(enemy.IMAGE_DEAD);
+
+        if (typeof enemy.stopAnimation === "function") {
+            enemy.stopAnimation();
+        }
+
+        setTimeout(() => {
+            const index = this.level.enemies.indexOf(enemy);
+            if (index > -1) {
+                this.level.enemies.splice(index, 1);
+            }
+        }, 1000);
     }
 
     checkItemCollisions() {
