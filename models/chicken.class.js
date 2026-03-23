@@ -3,6 +3,7 @@ class Chicken extends MovableObject {
     y = 330;
     width = 80;
     isDead = false;
+    stompRatio = 0.8;
     walkingInterval;
     animationInterval;
 

@@ -25,16 +25,20 @@ class World {
         this.character.world = this;
     }
 
+    lastThrowTime = 0;
+
     run() {
     addGameInterval(() => {
         this.checkCollisions();
         this.checkThrowObjects();
         this.checkItemCollisions();
-    }, 200);
+    }, 10);
 }
 
     checkThrowObjects() {
-        if (this.keyboard.D && !this.bottleBar.isEmpty()) {
+        const now = Date.now();
+        if (this.keyboard.D && !this.bottleBar.isEmpty() && now - this.lastThrowTime > 300) {
+            this.lastThrowTime = now;
             let bottle = new ThrowableObject(
                 this.character.x + 50,
                 this.character.y + 50
@@ -45,7 +49,6 @@ class World {
     }
 
     checkCollisions() {
-        // Gegner-Kollisionen
         this.level.enemies.forEach((enemy) => {
             if (this.isEnemyDefeated(enemy)) return;
             if (!this.character.isColliding(enemy)) return;
@@ -56,6 +59,7 @@ class World {
                 return;
             }
 
+            if (this.character.isHurt()) return;
             this.character.hit();
             this.statusBar.setPercentage(this.character.energy);
 
@@ -100,11 +104,12 @@ class World {
 
     isStompHit(enemy) {
         if (enemy.isBoss) return false;
+        if (this.character.speedY >= 0) return false;
 
-        const isFalling = this.character.speedY < 0;
-        const justLanded = Date.now() - this.character.landedAt < 300;
+        const characterBottom = this.character.y + this.character.height;
+        const stompZone = enemy.y + enemy.height * enemy.stompRatio;
 
-        return isFalling || justLanded;
+        return characterBottom <= stompZone;
     }
 
     defeatEnemyByStomp(enemy) {

@@ -3,6 +3,7 @@ class SmallChicken extends MovableObject {
     y = 380;
     width = 50;
     isDead = false;
+    stompRatio = 0.8;
     movementInterval;
     animationInterval;
 
