@@ -19,7 +19,7 @@ class Bottlebar extends DrawableObject {
     }
 
     increase() {
-        this.percentage += 20;
+        this.percentage += 25;
         if (this.percentage > 100) {
             this.percentage = 100;
         }
@@ -27,7 +27,7 @@ class Bottlebar extends DrawableObject {
     }
 
     decrease() {
-        this.percentage -= 20;
+        this.percentage -= 25;
         if (this.percentage < 0) {
             this.percentage = 0;
         }
@@ -39,18 +39,7 @@ class Bottlebar extends DrawableObject {
     }
 
     resolveImageIndex() {
-    if (this.percentage >= 100) {
-        return 5;
-    } else if (this.percentage >= 80) {
-        return 4;
-    } else if (this.percentage >= 60) {
-        return 3;
-    } else if (this.percentage >= 40) {
-        return 2;
-    } else if (this.percentage >= 20) {
-        return 1;
-    } else {
-        return 0;
+        let index = Math.round(this.percentage / 20);
+        return Math.max(0, Math.min(5, index));
     }
-}
 }
