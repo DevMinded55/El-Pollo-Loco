@@ -37,6 +37,19 @@
 <script src="hubs/interval-hub.js"></script>
 <script src="hubs/sound-hub.js"></script>
 <script src="hubs/image-hub.js"></script>
+<script>
+    (function () {
+        const root = document.documentElement;
+        root.style.setProperty(
+            "--start-screen-bg",
+            `url("${IMAGES.START_SCREEN}")`
+        );
+        root.style.setProperty(
+            "--end-screen-bg",
+            `url("${IMAGES.END_SCREEN_BG}")`
+        );
+    })();
+</script>
 <script src="models/drawable-object.class.js"></script>
 <script src="models/movable-object.class.js"></script>
 <script src="models/status-bar.class.js"></script>

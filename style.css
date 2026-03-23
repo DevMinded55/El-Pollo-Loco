@@ -29,8 +29,7 @@ body {
 }
 
 .game-screen--start {
-    background: url("assets/img/9_intro_outro_screens/start/startscreen_1.png") no-repeat
-        center center;
+    background: var(--start-screen-bg) no-repeat center center;
     background-size: cover;
     display: flex;
     flex-direction: column;
@@ -40,8 +39,7 @@ body {
 }
 
 .game-screen--end {
-    background: url("assets/img/5_background/first_half_background.png") no-repeat center
-        center;
+    background: var(--end-screen-bg) no-repeat center center;
     background-size: cover;
     background-color: rgba(0, 0, 0, 0.75);
     display: none;

@@ -4,7 +4,7 @@ class ThrowableObject extends MovableObject{
 
     constructor(x, y){
         super();
-        this.loadImage("assets/img/7_statusbars/3_icons/icon_salsa_bottle.png");
+        this.loadImage(IMAGES.ICON_SALSA_BOTTLE);
         this.x = x;
         this.y = y;
         this.height = 110;

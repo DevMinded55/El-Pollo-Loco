@@ -2,14 +2,11 @@ class Coins extends MovableObject{
     height = 140;
     y;
     width = 140;
-    IMAGES_WALKING = [
-        "assets/img/8_coin/coin_1.png",
-        "assets/img/8_coin/coin_2.png"
-    ];
+    IMAGES_WALKING = IMAGES.COIN;
 
     constructor(x){
         super();
-        this.loadImage("assets/img/8_coin/coin_1.png");
+        this.loadImage(IMAGES.COIN[0]);
         this.speed = 0.15 + Math.random() * 0.5;
         this.x = x ?? 200 + Math.random() * 500;
         this.y = 100 + Math.random() * 150;

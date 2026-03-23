@@ -28,9 +28,9 @@ function showEndScreen(won) {
     endScreen.style.display = "flex";
 
     if (won) {
-        endImage.src = "assets/img/You won, you lost/You win B.png";
+        endImage.src = IMAGES.END_WIN;
     } else {
-        endImage.src = "assets/img/You won, you lost/You lost b.png";
+        endImage.src = IMAGES.END_LOSE;
     }
 
     stopAllSounds();

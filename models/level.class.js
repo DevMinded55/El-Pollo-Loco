@@ -4,26 +4,26 @@ class Level {
             new Cloud()
         ];
     backgroundObjects  = [
-            new BackgroundObject("assets/img/5_background/layers/air.png",-719),
-            new BackgroundObject("assets/img/5_background/layers/3_third_layer/2.png", -719),
-            new BackgroundObject("assets/img/5_background/layers/2_second_layer/2.png",-719),
-            new BackgroundObject("assets/img/5_background/layers/1_first_layer/2.png",-719),
-            new BackgroundObject("assets/img/5_background/layers/air.png",0),
-            new BackgroundObject("assets/img/5_background/layers/3_third_layer/1.png", 0),
-            new BackgroundObject("assets/img/5_background/layers/2_second_layer/1.png",0),
-            new BackgroundObject("assets/img/5_background/layers/1_first_layer/1.png",0),
-            new BackgroundObject("assets/img/5_background/layers/air.png",719),
-            new BackgroundObject("assets/img/5_background/layers/3_third_layer/2.png", 719),
-            new BackgroundObject("assets/img/5_background/layers/2_second_layer/2.png",719),
-            new BackgroundObject("assets/img/5_background/layers/1_first_layer/2.png",719),
-            new BackgroundObject("assets/img/5_background/layers/air.png",1438),
-            new BackgroundObject("assets/img/5_background/layers/3_third_layer/1.png", 1438),
-            new BackgroundObject("assets/img/5_background/layers/2_second_layer/1.png",1438),
-            new BackgroundObject("assets/img/5_background/layers/1_first_layer/1.png",1438),
-            new BackgroundObject("assets/img/5_background/layers/air.png",2157),
-            new BackgroundObject("assets/img/5_background/layers/3_third_layer/2.png", 2157),
-            new BackgroundObject("assets/img/5_background/layers/2_second_layer/2.png",2157),
-            new BackgroundObject("assets/img/5_background/layers/1_first_layer/2.png",2157)
+            new BackgroundObject(IMAGES.BG_AIR,-719),
+            new BackgroundObject(IMAGES.BG_THIRD_2, -719),
+            new BackgroundObject(IMAGES.BG_SECOND_2,-719),
+            new BackgroundObject(IMAGES.BG_FIRST_2,-719),
+            new BackgroundObject(IMAGES.BG_AIR,0),
+            new BackgroundObject(IMAGES.BG_THIRD_1, 0),
+            new BackgroundObject(IMAGES.BG_SECOND_1,0),
+            new BackgroundObject(IMAGES.BG_FIRST_1,0),
+            new BackgroundObject(IMAGES.BG_AIR,719),
+            new BackgroundObject(IMAGES.BG_THIRD_2, 719),
+            new BackgroundObject(IMAGES.BG_SECOND_2,719),
+            new BackgroundObject(IMAGES.BG_FIRST_2,719),
+            new BackgroundObject(IMAGES.BG_AIR,1438),
+            new BackgroundObject(IMAGES.BG_THIRD_1, 1438),
+            new BackgroundObject(IMAGES.BG_SECOND_1,1438),
+            new BackgroundObject(IMAGES.BG_FIRST_1,1438),
+            new BackgroundObject(IMAGES.BG_AIR,2157),
+            new BackgroundObject(IMAGES.BG_THIRD_2, 2157),
+            new BackgroundObject(IMAGES.BG_SECOND_2,2157),
+            new BackgroundObject(IMAGES.BG_FIRST_2,2157)
         ];
     level_end_x = 2200;
     coins  = Level.spread(5, 400, 1900).map(x => new Coins(x));
