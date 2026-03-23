@@ -1,25 +1,156 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-canvas {
-    background-color: black;
-}
-
-#start-screen {
-    position: absolute;
-    width: 720px;
-    height: 480px;
-    background: url("assets/img/9_intro_outro_screens/start/startscreen_1.png") no-repeat center
-        center;
-    background-size: cover;
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: clamp(12px, 3vw, 24px);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #1a1a1a;
+}
+
+/* Game area: scales on small screens, max game resolution on large */
+.game-screen {
+    position: relative;
+    width: min(100%, 720px);
+    aspect-ratio: 720 / 480;
+    max-height: min(85vh, 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+.game-screen--start {
+    background: url("assets/img/9_intro_outro_screens/start/startscreen_1.png") no-repeat
+        center center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
     z-index: 10;
+}
+
+.game-screen--end {
+    background: url("assets/img/5_background/first_half_background.png") no-repeat center
+        center;
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(16px, 4vw, 28px);
+    color: #fff;
+    z-index: 20;
+}
+
+.game-screen--end[hidden] {
+    display: none !important;
+}
+
+.end-screen-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(20px, 4vw, 32px);
+    width: 100%;
+    max-width: 520px;
+}
+
+#end-image {
+    display: block;
+    width: min(100%, 420px);
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.screen-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.screen-actions--bottom {
+    padding: clamp(20px, 5vw, 40px) clamp(16px, 4vw, 32px);
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.65) 0%,
+        rgba(0, 0, 0, 0.2) 55%,
+        transparent 100%
+    );
+}
+
+/* Primary button — shared Start / Restart */
+.btn {
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn-primary {
+    min-width: min(280px, 100%);
+    padding: 14px 32px;
+    touch-action: manipulation;
+    font-size: clamp(1rem, 2.8vw, 1.15rem);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(165deg, #ffb347 0%, #f5a623 35%, #e67e00 100%);
+    border-radius: 999px;
+    box-shadow:
+        0 4px 0 #b35f00,
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        filter 0.15s ease;
+}
+
+.btn-primary:hover {
+    filter: brightness(1.06);
+    transform: translateY(-2px);
+    box-shadow:
+        0 5px 0 #b35f00,
+        0 12px 28px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+    box-shadow:
+        0 2px 0 #b35f00,
+        0 4px 16px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+#canvas {
+    display: none;
+    width: min(100%, 720px);
+    height: auto;
+    aspect-ratio: 720 / 480;
+    max-height: min(85vh, 100%);
+    background-color: #000;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
 }
 
 #start-screen h1 {
@@ -27,39 +158,4 @@ canvas {
     font-size: 48px;
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px black;
-}
-
-#start-screen button {
-    padding: 15px 30px;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-#end-screen {
-    position: absolute;
-    background: url("assets/img/5_background/first_half_background.png") no-repeat center
-        center;
-    background-size: cover;
-    width: 720px;
-    height: 480px;
-    background-color: rgba(0,0,0,0.8);
-    text-align: center;
-    padding-top: 100px;
-    color: white;
-}
-
-#end-screen button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 20px;
-    position: absolute;
-    top: 80%;
-}
-
-#end-image{
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 20%;
 }

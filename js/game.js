@@ -21,11 +21,11 @@ function startGame() {
 function showEndScreen(won) {
     const endScreen = document.getElementById("end-screen");
     const endImage = document.getElementById("end-image");
-    const endImageBackground = document.getElementById("end-image-background");
     const canvas = document.getElementById("canvas");
 
     canvas.style.display = "none";
-    endScreen.style.display = "block";
+    endScreen.hidden = false;
+    endScreen.style.display = "flex";
 
     if (won) {
         endImage.src = "assets/img/You won, you lost/You win B.png";
@@ -38,8 +38,8 @@ function showEndScreen(won) {
 }
 
 function restartGame() {
-    // Endscreen verstecken
     const endScreen = document.getElementById("end-screen");
+    endScreen.hidden = true;
     endScreen.style.display = "none";
 
     // Canvas wieder zeigen
