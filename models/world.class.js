@@ -27,13 +27,25 @@ class World {
 
     lastThrowTime = 0;
 
+    endbossTriggered = false;
+
     run() {
-    addGameInterval(() => {
-        this.checkCollisions();
-        this.checkThrowObjects();
-        this.checkItemCollisions();
-    }, 10);
-}
+        addGameInterval(() => {
+            this.checkCollisions();
+            this.checkThrowObjects();
+            this.checkItemCollisions();
+            this.checkEndbossApproach();
+        }, 10);
+    }
+
+    checkEndbossApproach() {
+        if (this.endbossTriggered) return;
+        const boss = this.level.enemies.find((e) => e.isBoss);
+        if (boss && Math.abs(this.character.x - boss.x) < 500) {
+            this.endbossTriggered = true;
+            playSound("ENDBOSS_APPROACH");
+        }
+    }
 
     checkThrowObjects() {
         const now = Date.now();
@@ -62,6 +74,7 @@ class World {
             if (this.character.isHurt()) return;
             this.character.hit();
             this.statusBar.setPercentage(this.character.energy);
+            playSound("CHARACTER_DAMAGE");
 
             if (this.character.energy <= 0 && !this.character.dead) {
                 this.character.dead = true;
@@ -81,6 +94,7 @@ class World {
                     enemy.hit();
                     bottle.broken = true;
                     this.bossBar.setPercentage(enemy.energy);
+                    playSound("BOTTLE_BREAK");
 
                     if (enemy.dead) {
                         setTimeout(() => {
@@ -116,6 +130,7 @@ class World {
         enemy.isDead = true;
         enemy.energy = 0;
         enemy.loadImage(enemy.IMAGE_DEAD);
+        playSound(enemy instanceof SmallChicken ? "CHICKEN_DEAD_2" : "CHICKEN_DEAD");
 
         if (typeof enemy.stopAnimation === "function") {
             enemy.stopAnimation();
@@ -134,6 +149,7 @@ class World {
             if (this.character.isColliding(coin)) {
                 this.level.coins.splice(index, 1);
                 this.coinBar.increase();
+                playSound("COIN_COLLECT");
             }
         });
 
@@ -141,6 +157,7 @@ class World {
             if (this.character.isColliding(bottle)) {
                 this.level.bottles.splice(index, 1);
                 this.bottleBar.increase();
+                playSound("BOTTLE_COLLECT");
             }
         });
     }

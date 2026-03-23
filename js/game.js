@@ -14,7 +14,8 @@ function startGame() {
     document.getElementById("start-screen").style.display = "none";
     canvas = document.getElementById("canvas");
     canvas.style.display = "block";
-    init(); // Welt neu initialisieren
+    init();
+    playSound("GAME_START");
 }
 
 function showEndScreen(won) {
@@ -32,7 +33,8 @@ function showEndScreen(won) {
         endImage.src = "assets/img/You won, you lost/You lost b.png";
     }
 
-    clearAllIntervals(); // Alle Animationen/Intervalle beenden
+    stopAllSounds();
+    clearAllIntervals();
 }
 
 function restartGame() {
@@ -47,7 +49,7 @@ function restartGame() {
     //Alle Animationen werden gestoppt
     cancelAnimationFrame(animationFrameId);
 
-    // Alle Intervalle löschen
+    stopAllSounds();
     clearAllIntervals();
 
     // Welt neu initialisieren
