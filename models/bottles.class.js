@@ -1,9 +1,19 @@
+/**
+ * Ground salsa bottle pickup refilling throw ammo.
+ */
 class Bottles extends MovableObject{
     height = 100;
     y = 330;
     width = 100;
+    offsetX = 20;
+    offsetY = 15;
+    offsetWidth = 20;
+    offsetHeight = 10;
     IMAGES_WALKING = IMAGES.BOTTLE_ON_GROUND;
 
+    /**
+     * @param {number} [x] world X; random default if omitted
+     */
     constructor(x){
         super();
         this.loadImage(IMAGES.BOTTLE_ON_GROUND[0]);
@@ -13,6 +23,7 @@ class Bottles extends MovableObject{
         this.animate();
     }
 
+    /** Ground-bottle shimmer animation interval. */
     animate() {
         addGameInterval(() =>{
         this.playAnimation(this.IMAGES_WALKING);

@@ -1,3 +1,7 @@
+/**
+ * @class MovableObject
+ * Adds gravity, collision, movement, and combat helpers over {@link DrawableObject}.
+ */
 class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
@@ -7,6 +11,7 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     landedAt = 0;
 
+    /** Applies vertical acceleration via a timed interval. */
     applyGravity() {
         addGameInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -21,6 +26,7 @@ class MovableObject extends DrawableObject {
         }, 1000 / 25);
     }
 
+    /** @returns {boolean} true while sprite is airborne (or always for bottles in flight). */
     isAboveGround() {
         if (this instanceof ThrowableObject) {
             return true;
@@ -29,15 +35,22 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    /**
+     * Axis-aligned overlap using {@link DrawableObject#getCollisionBox} on both sides.
+     * @param {DrawableObject} mo
+     */
     isColliding(mo) {
+        const a = this.getCollisionBox();
+        const b = mo.getCollisionBox();
         return (
-            this.x + this.width > mo.x &&
-            this.x < mo.x + mo.width &&
-            this.y + this.height > mo.y &&
-            this.y < mo.y + mo.height
+            a.x + a.width > b.x &&
+            a.x < b.x + b.width &&
+            a.y + a.height > b.y &&
+            a.y < b.y + b.height
         );
     }
 
+    /** Reduces energy; sets {@link MovableObject#lastHit} timestamp when energy remains. */
     hit() {
         this.energy -= 20;
         if (this.energy < 0) {
@@ -47,24 +60,32 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    /** @returns {boolean} true during brief invulnerability after hit */
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
         return timepassed < 1.5;
     }
 
+    /** @returns {boolean} */
     isDead() {
         return this.energy == 0;
     }
 
+    /** Moves right by {@link speed}. */
     moveRight() {
         this.x += this.speed;
     }
 
+    /** Moves left by {@link speed}. */
     moveLeft() {
         this.x -= this.speed;
     }
 
+    /**
+     * Advances cycling frame index into {@link DrawableObject#imageCache}.
+     * @param {string[]} images
+     */
     playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -72,6 +93,7 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
+    /** Starts upward velocity for a jump arc. */
     jump() {
         this.speedY = 30;
     }

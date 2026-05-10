@@ -1,7 +1,11 @@
+/**
+ * Player health bar HUD sprite strip.
+ */
 class Statusbar extends DrawableObject {
     IMAGES = IMAGES.STATUS_BAR_HEALTH;
     percentage = 100;
 
+    /** Picks full-health frame at layout position. */
     constructor() {
         super();
         this.loadImages(this.IMAGES);
@@ -12,25 +16,18 @@ class Statusbar extends DrawableObject {
         this.setPercentage(100);
     }
 
+    /**
+     * Selects sprite index from discrete 20% steps.
+     * @param {number} percentage character energy 0–100
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+    /** @returns {number} index 0–5 into {@link Statusbar#IMAGES} */
     resolveImageIndex() {
-        if (this.percentage >= 100) {
-            return 5;
-        } else if (this.percentage >= 80) {
-            return 4;
-        } else if (this.percentage >= 60) {
-            return 3;
-        } else if (this.percentage >= 40) {
-            return 2;
-        } else if (this.percentage >= 20) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return Math.min(5, Math.floor(this.percentage / 20));
     }
 }

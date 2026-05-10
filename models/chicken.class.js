@@ -1,7 +1,14 @@
+/**
+ * Ground enemy; stomp to defeat.
+ */
 class Chicken extends MovableObject {
     height = 100;
     y = 330;
     width = 80;
+    offsetX = 5;
+    offsetY = 5;
+    offsetWidth = 5;
+    offsetHeight = 10;
     isDead = false;
     stompRatio = 0.8;
     walkingInterval;
@@ -10,6 +17,9 @@ class Chicken extends MovableObject {
     IMAGES_WALKING = IMAGES.CHICKEN_NORMAL_WALKING;
     IMAGE_DEAD = IMAGES.CHICKEN_NORMAL_DEAD;
 
+    /**
+     * @param {number} [x] world X; random default if omitted
+     */
     constructor(x) {
         super();
         this.loadImage(IMAGES.CHICKEN_NORMAL_WALKING[0]);
@@ -19,6 +29,7 @@ class Chicken extends MovableObject {
         this.animate();
     }
 
+    /** Walk left and walk animation intervals while alive. */
     animate() {
         addGameInterval(() => {
             if (!this.isDead) this.moveLeft();
@@ -29,6 +40,7 @@ class Chicken extends MovableObject {
         }, 1000 / 5);
     }
 
+    /** Legacy hook; intervals today use {@link addGameInterval} IDs instead. */
     stopAnimation() {
         clearInterval(this.movementInterval);
         clearInterval(this.animationInterval);

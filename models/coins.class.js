@@ -1,9 +1,19 @@
+/**
+ * Collectible coin in the air.
+ */
 class Coins extends MovableObject{
     height = 140;
     y;
     width = 140;
+    offsetX = 45;
+    offsetY = 45;
+    offsetWidth = 45;
+    offsetHeight = 45;
     IMAGES_WALKING = IMAGES.COIN;
 
+    /**
+     * @param {number} [x] world X; random default if omitted
+     */
     constructor(x){
         super();
         this.loadImage(IMAGES.COIN[0]);
@@ -14,6 +24,7 @@ class Coins extends MovableObject{
         this.animate();
     }
 
+    /** Spinning coin sprite interval. */
     animate() {
         addGameInterval(() =>{
         this.playAnimation(this.IMAGES_WALKING);

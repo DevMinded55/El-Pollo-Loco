@@ -1,3 +1,6 @@
+/**
+ * Level data: backgrounds, enemies, coins, bottles, end position.
+ */
 class Level {
     enemies = Level.createEnemies();
     clouds  = [
@@ -30,6 +33,9 @@ class Level {
     bottles = Level.spread(4, 300, 1800).map(x => new Bottles(x));
     endboss;
 
+    /**
+     * @returns {MovableObject[]}
+     */
     static createEnemies() {
         const positions = Level.spread(6, 400, 1900);
         const enemies = [
@@ -44,6 +50,12 @@ class Level {
         return enemies;
     }
 
+    /**
+     * @param {number} count
+     * @param {number} min
+     * @param {number} max
+     * @returns {number[]}
+     */
     static spread(count, min, max) {
         const gap = (max - min) / (count - 1);
         const jitter = gap * 0.3;

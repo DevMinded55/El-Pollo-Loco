@@ -1,7 +1,11 @@
+/**
+ * Coin collection progress HUD.
+ */
 class Coinbar extends DrawableObject {
     IMAGES = IMAGES.STATUS_BAR_COIN;
     percentage = 100;
 
+    /** Starts at empty coin bar. */
     constructor() {
         super();
         this.loadImages(this.IMAGES);
@@ -12,33 +16,26 @@ class Coinbar extends DrawableObject {
         this.setPercentage(0);
     }
 
+    /**
+     * @param {number} percentage filled segments 0–100
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+    /** Adds one pickup step (20%) capped at full. */
     increase() {
-    this.percentage += 20; 
-    if (this.percentage > 100) {
-        this.percentage = 100;
-    }
-    this.setPercentage(this.percentage);
-}
-
-    resolveImageIndex() {
-        if (this.percentage >= 100) {
-            return 5;
-        } else if (this.percentage >= 80) {
-            return 4;
-        } else if (this.percentage >= 60) {
-            return 3;
-        } else if (this.percentage >= 40) {
-            return 2;
-        } else if (this.percentage >= 20) {
-            return 1;
-        } else {
-            return 0;
+        this.percentage += 20;
+        if (this.percentage > 100) {
+            this.percentage = 100;
         }
+        this.setPercentage(this.percentage);
+    }
+
+    /** @returns {number} strip index 0–5 */
+    resolveImageIndex() {
+        return Math.min(5, Math.floor(this.percentage / 20));
     }
 }

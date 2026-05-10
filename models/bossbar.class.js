@@ -1,8 +1,12 @@
+/**
+ * End boss health HUD.
+ */
 class Bossbar extends DrawableObject {
     IMAGES = IMAGES.STATUS_BAR_BOSS;
 
     percentage = 100;
 
+    /** Full boss bar at top-right. */
     constructor() {
         super();
         this.loadImages(this.IMAGES);
@@ -13,6 +17,10 @@ class Bossbar extends DrawableObject {
         this.setPercentage(100);
     }
 
+    /**
+     * Maps boss energy 0–100 to boss strip sprites.
+     * @param {number} percentage boss energy 0–100
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let index = Math.floor(percentage / 20);

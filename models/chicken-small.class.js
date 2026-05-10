@@ -1,7 +1,14 @@
+/**
+ * Smaller ground enemy; same stomp rules as {@link Chicken}.
+ */
 class SmallChicken extends MovableObject {
     height = 60;
     y = 380;
     width = 50;
+    offsetX = 4;
+    offsetY = 4;
+    offsetWidth = 4;
+    offsetHeight = 4;
     isDead = false;
     stompRatio = 0.8;
     movementInterval;
@@ -10,6 +17,9 @@ class SmallChicken extends MovableObject {
     IMAGES_WALKING = IMAGES.CHICKEN_SMALL_WALKING;
     IMAGE_DEAD = IMAGES.CHICKEN_SMALL_DEAD;
 
+    /**
+     * @param {number} [x] world X; random default if omitted
+     */
     constructor(x) {
         super();
         this.loadImage(this.IMAGES_WALKING[0]);
@@ -19,6 +29,7 @@ class SmallChicken extends MovableObject {
         this.animate();
     }
 
+    /** Walk left and walk animation intervals while alive. */
     animate() {
         addGameInterval(() => {
             if (!this.isDead) this.moveLeft();
@@ -29,6 +40,7 @@ class SmallChicken extends MovableObject {
         }, 1000 / 5);
     }
 
+    /** Legacy hook; intervals today use {@link addGameInterval} IDs instead. */
     stopAnimation() {
         clearInterval(this.movementInterval);
         clearInterval(this.animationInterval);
