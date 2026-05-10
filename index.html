@@ -3,12 +3,33 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="assets/img/7_statusbars/3_icons/icon_salsa_bottle.png" />
         <link rel="stylesheet" href="style.css" />
         <title>El Pollo Loco</title>
     </head>
     <body>
+        <div id="orientation-lock" class="orientation-lock" aria-live="polite">
+            <p class="orientation-lock__text">
+                Please rotate your device — landscape required.
+            </p>
+        </div>
+
         <div id="start-screen" class="game-screen game-screen--start">
             <div class="screen-actions screen-actions--bottom">
+                <div class="start-screen-toolbar">
+                    <button
+                        type="button"
+                        id="mute-btn"
+                        class="icon-btn"
+                        aria-label="Toggle sound"
+                        aria-pressed="false"
+                    >
+                        Sound
+                    </button>
+                    <button type="button" id="imprint-open" class="btn btn-secondary">
+                        Impressum
+                    </button>
+                </div>
                 <button
                     type="button"
                     class="btn btn-primary"
@@ -19,7 +40,23 @@
             </div>
         </div>
 
-        <canvas id="canvas" width="720" height="480"></canvas>
+        <div class="game-stage" id="game-stage">
+            <canvas id="canvas" width="720" height="480"></canvas>
+            <div id="touch-controls" class="touch-controls" hidden>
+                <button type="button" data-key="LEFT" class="touch-btn" aria-label="Move left">
+                    ◀
+                </button>
+                <button type="button" data-key="RIGHT" class="touch-btn" aria-label="Move right">
+                    ▶
+                </button>
+                <button type="button" data-key="SPACE" class="touch-btn" aria-label="Jump">
+                    Jump
+                </button>
+                <button type="button" data-key="D" class="touch-btn" aria-label="Throw bottle">
+                    Throw
+                </button>
+            </div>
+        </div>
 
         <div id="end-screen" class="game-screen game-screen--end" hidden>
             <div class="end-screen-inner">
@@ -33,6 +70,68 @@
                 </button>
             </div>
         </div>
+
+        <dialog id="imprint-dialog" class="imprint-dialog">
+            <form method="dialog" class="imprint-dialog__form">
+                <h2 class="imprint-dialog__title">Impressum</h2>
+                <div class="imprint-dialog__body" lang="de">
+                    <p class="imprint-dialog__lead">Angaben gemäß § 5 DDG</p>
+                    <p>
+                        <strong>Burak Keles</strong><br />
+                        Untere Seewiese 11<br />
+                        64711 Erbach<br />
+                        Deutschland
+                    </p>
+                    <p>
+                        <strong>Kontakt:</strong><br />
+                        Telefon:
+                        <a href="tel:+4915127074246">015127074246</a><br />
+                        E-Mail:
+                        <a href="mailto:keles490@googlemail.com"
+                            >keles490@googlemail.com</a
+                        >
+                    </p>
+                    <h3 class="imprint-dialog__h3">
+                        Verbraucherstreitbeilegung /
+                        Universalschlichtungsstelle
+                    </h3>
+                    <p>
+                        Wir sind nicht bereit oder verpflichtet, an
+                        Streitbeilegungsverfahren vor einer
+                        Verbraucherschlichtungsstelle teilzunehmen.
+                    </p>
+                    <h3 class="imprint-dialog__h3">Haftung für Inhalte</h3>
+                    <p>
+                        Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für
+                        eigene Inhalte auf diesen Seiten nach den allgemeinen
+                        Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir
+                        als Diensteanbieter jedoch nicht verpflichtet,
+                        übermittelte oder gespeicherte fremde Informationen zu
+                        überwachen oder nach Umständen zu forschen, die auf
+                        eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen
+                        zur Entfernung oder Sperrung der Nutzung von
+                        Informationen nach den allgemeinen Gesetzen bleiben
+                        hiervon unberührt. Eine diesbezügliche Haftung ist
+                        jedoch erst ab dem Zeitpunkt der Kenntnis einer
+                        konkreten Rechtsverletzung möglich. Bei Bekanntwerden
+                        von entsprechenden Rechtsverletzungen werden wir diese
+                        Inhalte umgehend entfernen.
+                    </p>
+                    <h3 class="imprint-dialog__h3">Urheberrecht</h3>
+                    <p>
+                        Die durch die Seitenbetreiber erstellten Inhalte und
+                        Werke auf diesen Seiten unterliegen dem deutschen
+                        Urheberrecht. Die Vervielfältigung, Bearbeitung,
+                        Verbreitung und jede Art der Verwertung außerhalb der
+                        Grenzen des Urheberrechtes bedürfen der schriftlichen
+                        Zustimmung des jeweiligen Autors bzw. Erstellers.
+                    </p>
+                </div>
+                <button type="submit" class="btn btn-primary imprint-dialog__close">
+                    Close
+                </button>
+            </form>
+        </dialog>
 
 <script src="hubs/interval-hub.js"></script>
 <script src="hubs/sound-hub.js"></script>
