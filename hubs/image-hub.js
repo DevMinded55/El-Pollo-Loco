@@ -1,3 +1,7 @@
+/**
+ * Sprite and UI image paths used across the game.
+ * @readonly
+ */
 const IMAGES = {
     START_SCREEN: "assets/img/9_intro_outro_screens/start/startscreen_1.png",
     END_SCREEN_BG: "assets/img/5_background/first_half_background.png",

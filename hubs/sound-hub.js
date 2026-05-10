@@ -1,3 +1,6 @@
+/**
+ * Central sound effects; volume, loop flags, and global mute (localStorage key epl_muted).
+ */
 const SOUNDS = {
     CHARACTER_JUMP: new Audio("audio/character/characterJump.wav"),
     CHARACTER_DAMAGE: new Audio("audio/character/characterDamage.mp3"),
@@ -23,7 +26,39 @@ SOUNDS.ENDBOSS_APPROACH.volume = 0.5;
 SOUNDS.GAME_START.volume = 0.3;
 SOUNDS.BOTTLE_BREAK.volume = 0.6;
 
+let isMuted = localStorage.getItem("epl_muted") === "1";
+
+/**
+ * @param {boolean} value
+ */
+function setMuted(value) {
+    isMuted = value;
+    localStorage.setItem("epl_muted", value ? "1" : "0");
+    Object.values(SOUNDS).forEach((s) => {
+        s.muted = value;
+    });
+}
+
+/**
+ * @returns {boolean} new muted state
+ */
+function toggleMuted() {
+    setMuted(!isMuted);
+    return isMuted;
+}
+
+/**
+ * @returns {boolean}
+ */
+function getMuted() {
+    return isMuted;
+}
+
+/**
+ * @param {string} name
+ */
 function playSound(name) {
+    if (isMuted) return;
     const sound = SOUNDS[name];
     if (!sound) return;
     if (sound.loop) {
@@ -36,6 +71,9 @@ function playSound(name) {
     }
 }
 
+/**
+ * @param {string} name
+ */
 function stopSound(name) {
     const sound = SOUNDS[name];
     if (!sound) return;
@@ -43,9 +81,12 @@ function stopSound(name) {
     sound.currentTime = 0;
 }
 
+/** Pauses and rewinds every entry in {@link SOUNDS}. */
 function stopAllSounds() {
     Object.values(SOUNDS).forEach((sound) => {
         sound.pause();
         sound.currentTime = 0;
     });
 }
+
+setMuted(isMuted);
