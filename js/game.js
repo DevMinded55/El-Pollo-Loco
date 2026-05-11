@@ -155,6 +155,23 @@ function restartGame() {
     init();
 }
 
+/** Stops the run, hides game/end UI, and shows the start screen again. */
+function returnToMainMenu() {
+    cancelAnimationFrame(animationFrameId);
+    stopAllSounds();
+    clearAllIntervals();
+    hidePlayingStage();
+
+    const endScreen = document.getElementById("end-screen");
+    endScreen.hidden = true;
+    endScreen.style.display = "none";
+
+    const startScreen = document.getElementById("start-screen");
+    startScreen.style.display = "";
+
+    world = null;
+}
+
 window.addEventListener("keydown", (e) => setKeyFromEvent(e, true));
 
 window.addEventListener("keyup", (e) => setKeyFromEvent(e, false));

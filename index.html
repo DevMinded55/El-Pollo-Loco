@@ -42,6 +42,15 @@
 
         <div class="game-stage" id="game-stage">
             <canvas id="canvas" width="720" height="480"></canvas>
+            <button
+                type="button"
+                id="ingame-menu-btn"
+                class="ingame-menu-btn"
+                aria-label="Back to main menu"
+                onclick="returnToMainMenu()"
+            >
+                Menu
+            </button>
             <div id="touch-controls" class="touch-controls" hidden>
                 <button type="button" data-key="LEFT" class="touch-btn" aria-label="Move left">
                     ◀
@@ -61,13 +70,22 @@
         <div id="end-screen" class="game-screen game-screen--end" hidden>
             <div class="end-screen-inner">
                 <img id="end-image" src="" alt="Endscreen" />
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    onclick="restartGame()"
-                >
-                    Restart Game
-                </button>
+                <div class="end-screen-actions">
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        onclick="restartGame()"
+                    >
+                        Restart Game
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        onclick="returnToMainMenu()"
+                    >
+                        Main Menu
+                    </button>
+                </div>
             </div>
         </div>
 
