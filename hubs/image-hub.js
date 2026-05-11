@@ -104,6 +104,21 @@ const IMAGES = {
     ICON_SALSA_BOTTLE:
         "assets/img/7_statusbars/3_icons/icon_salsa_bottle.png",
 
+    BOTTLE_ROTATION: [
+        "assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
+        "assets/img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png",
+        "assets/img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png",
+        "assets/img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png",
+    ],
+    BOTTLE_SPLASH: [
+        "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png",
+        "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png",
+        "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png",
+        "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/4_bottle_splash.png",
+        "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png",
+        "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
+    ],
+
     STATUS_BAR_HEALTH: [
         "assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png",
         "assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/20.png",
@@ -146,6 +161,22 @@ const IMAGES = {
         "assets/img/4_enemie_boss_chicken/2_alert/G10.png",
         "assets/img/4_enemie_boss_chicken/2_alert/G11.png",
         "assets/img/4_enemie_boss_chicken/2_alert/G12.png",
+    ],
+    ENDBOSS_WALK: [
+        "assets/img/4_enemie_boss_chicken/1_walk/G1.png",
+        "assets/img/4_enemie_boss_chicken/1_walk/G2.png",
+        "assets/img/4_enemie_boss_chicken/1_walk/G3.png",
+        "assets/img/4_enemie_boss_chicken/1_walk/G4.png",
+    ],
+    ENDBOSS_ATTACK: [
+        "assets/img/4_enemie_boss_chicken/3_attack/G13.png",
+        "assets/img/4_enemie_boss_chicken/3_attack/G14.png",
+        "assets/img/4_enemie_boss_chicken/3_attack/G15.png",
+        "assets/img/4_enemie_boss_chicken/3_attack/G16.png",
+        "assets/img/4_enemie_boss_chicken/3_attack/G17.png",
+        "assets/img/4_enemie_boss_chicken/3_attack/G18.png",
+        "assets/img/4_enemie_boss_chicken/3_attack/G19.png",
+        "assets/img/4_enemie_boss_chicken/3_attack/G20.png",
     ],
     ENDBOSS_HURT: [
         "assets/img/4_enemie_boss_chicken/4_hurt/G21.png",

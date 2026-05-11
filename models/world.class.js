@@ -32,9 +32,11 @@ class World {
         this.run();
     }
 
-    /** Assigns this world on the {@link Character}. */
+    /** Assigns this world on the {@link Character} and the {@link Endboss}. */
     setWorld() {
         this.character.world = this;
+        const boss = this.level.enemies.find((e) => e.isBoss);
+        if (boss) boss.world = this;
     }
 
     /** Starts fixed-interval game logic (collisions, throws, items, boss cue). */
@@ -47,12 +49,13 @@ class World {
         }, 10);
     }
 
-    /** Plays approach sound once when the player nears the boss. */
+    /** Wakes the boss + plays approach sound once when the player nears him. */
     checkEndbossApproach() {
         if (this.endbossTriggered) return;
         const boss = this.level.enemies.find((e) => e.isBoss);
         if (boss && Math.abs(this.character.x - boss.x) < 500) {
             this.endbossTriggered = true;
+            if (typeof boss.trigger === "function") boss.trigger();
             playSound("ENDBOSS_APPROACH");
         }
     }
@@ -62,9 +65,12 @@ class World {
         const now = Date.now();
         if (this.keyboard.D && !this.bottleBar.isEmpty() && now - this.lastThrowTime > 300) {
             this.lastThrowTime = now;
+            const dir = this.character.otherDirection ? -1 : 1;
+            const spawnX = this.character.x + (dir === 1 ? 50 : -50);
             let bottle = new ThrowableObject(
-                this.character.x + 50,
-                this.character.y + 50
+                spawnX,
+                this.character.y + 50,
+                dir
             );
             this.throwableObjects.push(bottle);
             this.bottleBar.decrease();
@@ -135,14 +141,15 @@ class World {
         if (!enemy.isBoss || bottle.broken || enemy.dead) return;
         if (!bottle.isColliding(enemy)) return;
         enemy.hit();
-        bottle.broken = true;
+        bottle.splash();
         this.bossBar.setPercentage(enemy.energy);
-        playSound("CHICKEN_DEAD_2");
     }
 
-    /** Drops shattered bottle instances from the active list. */
+    /** Drops shattered bottle instances after the splash animation has played. */
     pruneBrokenBottles() {
-        this.throwableObjects = this.throwableObjects.filter((b) => !b.broken);
+        this.throwableObjects = this.throwableObjects.filter(
+            (b) => !b.broken || Date.now() - b.brokenAt < 400
+        );
     }
 
     /** @param {MovableObject} enemy */
