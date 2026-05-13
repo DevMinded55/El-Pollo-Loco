@@ -52,25 +52,22 @@ class Endboss extends MovableObject {
 
     /** Animation tick: chooses sprite strip from current state. */
     animate() {
-        addGameInterval(() => {
-            if (this.dead) {
-                this.playAnimation(this.IMAGES_DEAD);
-                return;
-            }
-            if (this.hurt) {
-                this.playAnimation(this.IMAGES_HURT);
-                return;
-            }
-            if (this.state === "attack") {
-                this.playAnimation(this.IMAGES_ATTACK);
-                return;
-            }
-            if (this.state === "walking") {
-                this.playAnimation(this.IMAGES_WALKING);
-                return;
-            }
-            this.playAnimation(this.IMAGES_ALERT);
-        }, 1000 / 8);
+        addGameInterval(() => this.playStateAnimation(), 1000 / 8);
+    }
+
+    /** Picks the sprite strip matching the current life / behavior state. */
+    playStateAnimation() {
+        const strip = this.resolveAnimationStrip();
+        this.playAnimation(strip);
+    }
+
+    /** @returns {string[]} sprite paths for the current state */
+    resolveAnimationStrip() {
+        if (this.dead) return this.IMAGES_DEAD;
+        if (this.hurt) return this.IMAGES_HURT;
+        if (this.state === "attack") return this.IMAGES_ATTACK;
+        if (this.state === "walking") return this.IMAGES_WALKING;
+        return this.IMAGES_ALERT;
     }
 
     /** Movement / AI tick at ~60 fps. */

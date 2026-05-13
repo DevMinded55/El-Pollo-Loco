@@ -12,11 +12,28 @@ class ThrowableObject extends MovableObject{
      * @param {number} y spawn Y near character
      * @param {number} [direction=1] +1 right, -1 left
      */
-    constructor(x, y, direction = 1){
+    constructor(x, y, direction = 1) {
         super();
+        this.loadAssets();
+        this.applyHitbox(x, y);
+        this.direction = direction;
+        this.otherDirection = direction === -1;
+        this.throw();
+    }
+
+    /** Preloads sprites used during flight and on impact. */
+    loadAssets() {
         this.loadImage(IMAGES.ICON_SALSA_BOTTLE);
         this.loadImages(IMAGES.BOTTLE_ROTATION);
         this.loadImages(IMAGES.BOTTLE_SPLASH);
+    }
+
+    /**
+     * Sets spawn position and collision insets.
+     * @param {number} x
+     * @param {number} y
+     */
+    applyHitbox(x, y) {
         this.x = x;
         this.y = y;
         this.height = 110;
@@ -25,9 +42,6 @@ class ThrowableObject extends MovableObject{
         this.offsetY = 15;
         this.offsetWidth = 20;
         this.offsetHeight = 15;
-        this.direction = direction;
-        this.otherDirection = direction === -1;
-        this.throw();
     }
 
     /** Arc gravity plus horizontal speed interval, plus rotation animation. */
