@@ -30,7 +30,9 @@ class Level {
         ];
     level_end_x = 2200;
     coins  = Level.spread(5, 400, 1900).map(x => new Coins(x));
-    bottles = Level.spread(4, 300, 1800).map(x => new Bottles(x));
+    bottles = Level.spread(Bottlebar.MAX_BOTTLES, 820, 2020, 0.12).map(
+        (x) => new Bottles(x)
+    );
     endboss;
 
     /**
@@ -54,11 +56,12 @@ class Level {
      * @param {number} count
      * @param {number} min
      * @param {number} max
+     * @param {number} [jitterFactor=0.3] random offset as fraction of the gap between slots
      * @returns {number[]}
      */
-    static spread(count, min, max) {
+    static spread(count, min, max, jitterFactor = 0.3) {
         const gap = (max - min) / (count - 1);
-        const jitter = gap * 0.3;
+        const jitter = gap * jitterFactor;
         const positions = [];
         for (let i = 0; i < count; i++) {
             const base = min + i * gap;

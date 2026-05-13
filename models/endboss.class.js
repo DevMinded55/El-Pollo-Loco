@@ -118,10 +118,10 @@ class Endboss extends MovableObject {
         }
     }
 
-    /** Bottle damage: lowers energy, brief hurt flag, may {@link Endboss#die}. */
+    /** Bottle damage: 34 per hit so the boss dies after 3 bottles. */
     hit() {
         if (this.dead) return;
-        this.energy = Math.max(0, this.energy - 20);
+        this.energy = Math.max(0, this.energy - 34);
         this.hurt = true;
         setTimeout(() => {
             this.hurt = false;

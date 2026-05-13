@@ -170,39 +170,6 @@ body {
     border-style: dashed;
 }
 
-.ingame-menu-btn {
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    z-index: 5;
-    padding: 6px 14px;
-    touch-action: manipulation;
-    cursor: pointer;
-    font: inherit;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #fff;
-    background: rgba(0, 0, 0, 0.7);
-    border: 1.5px solid rgba(255, 255, 255, 0.8);
-    border-radius: 999px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-    transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
-    display: none;
-}
-
-.ingame-menu-btn:hover {
-    background: rgba(0, 0, 0, 0.88);
-    border-color: #f5a623;
-    transform: translateY(-1px);
-}
-
-.game-stage.is-playing .ingame-menu-btn {
-    display: inline-block;
-}
-
 .end-screen-actions {
     display: flex;
     flex-wrap: wrap;
